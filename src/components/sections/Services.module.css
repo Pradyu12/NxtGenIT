@@ -1,0 +1,242 @@
+.head {
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: clamp(3rem, 8vh, 5.5rem);
+}
+
+.eyebrowRow {
+  margin-bottom: 0.5rem;
+}
+
+.title {
+  font-size: var(--step-h2);
+  line-height: 0.94;
+  text-transform: uppercase;
+}
+
+.period {
+  color: var(--lime-400);
+}
+
+.ledeWrap {
+  align-self: end;
+}
+
+.lede {
+  color: var(--text-dim);
+  font-size: var(--step-0);
+}
+
+@media (min-width: 900px) {
+  .head {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    column-gap: clamp(2rem, 6vw, 6rem);
+  }
+
+  .eyebrowRow {
+    grid-column: 1 / -1;
+  }
+
+  .ledeWrap {
+    padding-bottom: 0.5rem;
+  }
+}
+
+/* --- Grid ---------------------------------------------------------------- */
+
+.grid {
+  display: grid;
+  gap: 1px;
+  background: var(--line-faint);
+  border: 1px solid var(--line-faint);
+}
+
+@media (min-width: 720px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.item {
+  display: flex;
+  background: var(--ink-1000);
+}
+
+/* --- Card ---------------------------------------------------------------- */
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  padding: clamp(1.5rem, 2.6vw, 2.5rem);
+  background: var(--ink-950);
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    background-color var(--dur-base) var(--ease-out-expo),
+    transform var(--dur-base) var(--ease-out-expo);
+}
+
+/* Cursor spotlight — driven by --mx/--my set in the pointermove handler. */
+.spotlight {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0;
+  background: radial-gradient(
+    42% 42% at var(--mx, 50%) var(--my, 50%),
+    rgba(47, 123, 255, 0.16),
+    transparent 70%
+  );
+  transition: opacity var(--dur-base) var(--ease-out-expo);
+}
+
+/* Top rule that draws in from the left on hover */
+.top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  z-index: -1;
+}
+
+.topRule {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--lime-400), var(--cyan-400) 55%, transparent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 620ms var(--ease-out-expo);
+}
+
+.cardHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.index {
+  color: var(--text-faint);
+  font-size: 0.6875rem;
+}
+
+.glyph {
+  color: var(--text-faint);
+  transition: color var(--dur-base) var(--ease-out-expo);
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  flex: 1;
+}
+
+.cardTitle {
+  font-size: var(--step-h3);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+  color: var(--text-bright);
+}
+
+.cardDescription {
+  color: var(--text-dim);
+  line-height: 1.5;
+  max-width: 32ch;
+}
+
+.capabilities {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line-faint);
+}
+
+.capability {
+  position: relative;
+  padding-left: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  transition: color var(--dur-base) var(--ease-out-expo);
+}
+
+.capability::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.45em;
+  width: 4px;
+  height: 1px;
+  background: currentColor;
+}
+
+.cardFoot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+.arrow {
+  flex: none;
+  color: var(--text-faint);
+  transition:
+    color var(--dur-base) var(--ease-out-expo),
+    transform var(--dur-base) var(--ease-out-expo);
+}
+
+/* --- Hover / focus ------------------------------------------------------- */
+
+@media (hover: hover) and (pointer: fine) {
+  .card-hover:hover {
+    background: var(--ink-900);
+    transform: translateY(-4px);
+  }
+
+  .card-hover:hover .topRule {
+    transform: scaleX(1);
+  }
+
+  .card-hover:hover .spotlight {
+    opacity: 1;
+  }
+
+  .card-hover:hover .glyph,
+  .card-hover:hover .arrow {
+    color: var(--cyan-300);
+  }
+
+  .card-hover:hover .arrow {
+    transform: translate(2px, -2px);
+  }
+
+  .card-hover:hover .capability {
+    color: var(--text-dim);
+  }
+
+  .card-hover:hover .chip {
+    color: var(--text-base);
+    border-color: var(--line-soft);
+  }
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--lime-300);
+  outline-offset: -2px;
+}

@@ -1,0 +1,158 @@
+.footer {
+  position: relative;
+  z-index: var(--z-base);
+  border-top: 1px solid var(--line-faint);
+  background: linear-gradient(180deg, transparent, rgba(6, 9, 15, 0.9));
+}
+
+.inner {
+  display: grid;
+  gap: 2.5rem;
+  padding-block: clamp(3rem, 7vh, 4.5rem) clamp(2rem, 5vh, 3rem);
+}
+
+@media (min-width: 720px) {
+  .inner {
+    grid-template-columns: minmax(0, 1.4fr) repeat(2, minmax(0, 0.8fr));
+    gap: 2rem;
+  }
+}
+
+.brandBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.tagline {
+  font-size: var(--step-1);
+  letter-spacing: -0.02em;
+  color: var(--text-base);
+}
+
+.services {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.navBlock,
+.contactBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  align-items: flex-start;
+}
+
+.navHeading {
+  color: var(--text-faint);
+  font-size: var(--step--1);
+}
+
+.navList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.navLink,
+.email {
+  color: var(--text-dim);
+  font-size: var(--step-0);
+  transition: color var(--dur-fast) var(--ease-out-expo);
+}
+
+.navLink:hover,
+.email:hover {
+  color: var(--lime-300);
+}
+
+.location {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.social {
+  display: flex;
+  /* Must wrap: at the tablet breakpoint the contact column is narrow, and the
+     wider "GitHub"/"LinkedIn" labels plus their padding overflowed it by ~13px.
+     Letting them wrap keeps every width clean instead of clipping. */
+  flex-wrap: wrap;
+  gap: 0 1.125rem;
+  margin-top: 0.25rem;
+}
+
+/* The mono labels here are the smallest text on the page. At the default
+   0.625rem (10px) the social links rendered ~14px tall, well under the 44px
+   minimum touch target, so they were awkward to hit on a phone. Padding plus a
+   relative bump fixes the hit area without changing the visual weight much.
+   These are only links, so nothing is lost by making them tappable. */
+.socialLink {
+  font-family: var(--font-mono);
+  font-size: max(0.6875rem, var(--step-0));
+  line-height: 1.5;
+  padding-block: 0.5rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  border-bottom: 1px solid transparent;
+  transition:
+    color var(--dur-fast) var(--ease-out-expo),
+    border-color var(--dur-fast) var(--ease-out-expo);
+}
+
+.socialLink:hover {
+  color: var(--text-bright);
+  border-bottom-color: var(--line-lime);
+}
+
+/* --- Baseline ------------------------------------------------------------- */
+
+.baseline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  padding-block: 1.5rem max(1.5rem, env(safe-area-inset-bottom));
+  border-top: 1px solid var(--line-faint);
+}
+
+.copyright,
+.built {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.built {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  flex-wrap: wrap;
+}
+
+.dot {
+  color: var(--line-strong);
+}
+
+.baselineLink {
+  color: var(--text-dim);
+  border-bottom: 1px solid var(--line-soft);
+  transition:
+    color var(--dur-fast) var(--ease-out-expo),
+    border-color var(--dur-fast) var(--ease-out-expo);
+}
+
+.baselineLink:hover {
+  color: var(--lime-300);
+  border-bottom-color: var(--line-lime);
+}

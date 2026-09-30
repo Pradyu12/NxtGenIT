@@ -1,0 +1,91 @@
+.wrap {
+  position: relative;
+  width: 100%;
+  /* Matches the SVG viewBox exactly so the projection is distortion-free. */
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background:
+    radial-gradient(80% 70% at 30% 20%, rgba(29, 91, 196, 0.16), transparent 70%),
+    linear-gradient(180deg, var(--ink-900), var(--ink-1000));
+}
+
+.map {
+  width: 100%;
+  height: 100%;
+}
+
+.node,
+.nodeActive {
+  transition: opacity var(--dur-base) var(--ease-out-expo);
+}
+
+.node {
+  fill: var(--text-faint);
+  opacity: 0.5;
+}
+
+.nodeActive {
+  fill: var(--cyan-300);
+  opacity: 0.9;
+  animation: node-breathe 4.2s var(--ease-in-out-quart) infinite;
+}
+
+@keyframes node-breathe {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Travelling highlight bar */
+.signal {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 34%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(53, 224, 245, 0.07),
+    rgba(184, 242, 61, 0.05),
+    transparent
+  );
+  animation: signal-sweep 9s var(--ease-in-out-quart) infinite;
+}
+
+@keyframes signal-sweep {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(420%);
+  }
+}
+
+/* Static scanline texture — a faint horizontal rule pattern, no animation. */
+.scanline {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    180deg,
+    rgba(148, 178, 222, 0.05) 0px,
+    rgba(148, 178, 222, 0.05) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nodeActive {
+    animation: none;
+  }
+
+  .signal {
+    animation: none;
+    display: none;
+  }
+}

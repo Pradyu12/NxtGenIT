@@ -1,0 +1,131 @@
+.head {
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: clamp(3rem, 8vh, 5rem);
+}
+
+.eyebrowRow {
+  margin-bottom: 0.5rem;
+}
+
+.title {
+  font-size: var(--step-h2);
+  line-height: 0.94;
+  text-transform: uppercase;
+}
+
+.period {
+  color: var(--lime-400);
+}
+
+.lede {
+  color: var(--text-dim);
+}
+
+@media (min-width: 900px) {
+  .head {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    column-gap: clamp(2rem, 6vw, 6rem);
+  }
+
+  .eyebrowRow {
+    grid-column: 1 / -1;
+  }
+
+  .ledeWrap {
+    align-self: end;
+    padding-bottom: 0.5rem;
+  }
+}
+
+/* --- Principles ---------------------------------------------------------- */
+
+.list {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--line-faint);
+}
+
+@media (min-width: 860px) {
+  .list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.block {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  height: 100%;
+  padding: clamp(1.75rem, 3vw, 2.75rem) clamp(1.25rem, 2.4vw, 2rem) clamp(2rem, 3.5vw, 3rem) 0;
+  transition: background-color var(--dur-base) var(--ease-out-expo);
+}
+
+/* Vertical rule between blocks, drawn from the top down on reveal */
+.block::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 0;
+  background: linear-gradient(180deg, var(--lime-400), transparent);
+  transition: height 900ms var(--ease-out-expo) 200ms;
+}
+
+/* `.block` is itself the reveal trigger, so it carries `data-shown`. */
+.js .block[data-shown='true']::before {
+  height: 100%;
+}
+
+.block::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 1px;
+  background: var(--line-soft);
+  transition: width 620ms var(--ease-out-expo) 260ms;
+}
+
+.js .block[data-shown='true']::after {
+  width: 100%;
+}
+
+@media (min-width: 860px) {
+  .list > li:not(:first-child) .block {
+    padding-left: clamp(1.25rem, 2.4vw, 2rem);
+  }
+
+  .list > li:not(:first-child) .block::after {
+    left: 0;
+    right: auto;
+    width: 100%;
+    height: 100%;
+    background: none;
+    border-left: 1px solid var(--line-faint);
+  }
+}
+
+.index {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  color: var(--lime-400);
+}
+
+.blockTitle {
+  font-size: clamp(1.5rem, 1.1rem + 1.5vw, 2.125rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: var(--text-bright);
+}
+
+.blockBody {
+  color: var(--text-dim);
+  line-height: 1.55;
+  max-width: 30ch;
+}

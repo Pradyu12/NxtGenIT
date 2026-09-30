@@ -1,0 +1,76 @@
+.stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  /* Isolated so the canvas can never trigger a layout pass on its parent. */
+  contain: strict;
+}
+
+/* Always-present gradient. The canvas covers it once the first frame lands. */
+.fallback {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(70% 60% at 62% 38%, rgba(29, 91, 196, 0.34), transparent 70%),
+    linear-gradient(180deg, var(--ink-900), var(--ink-1000) 70%);
+  opacity: 0;
+  transition: opacity 1200ms var(--ease-out-expo);
+}
+
+/* No WebGL available: keep the gradient as the final look. */
+.fallback[data-visible] {
+  opacity: 1;
+}
+
+.canvas {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1400ms var(--ease-out-expo);
+}
+
+.canvas[data-live] {
+  opacity: 1;
+}
+
+/* Scrims: pure CSS legibility insurance so display type never fights the shader. */
+.stage:has(.canvas[data-scrim='left'])::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    var(--ink-1000) 0%,
+    rgba(4, 6, 10, 0.86) 26%,
+    rgba(4, 6, 10, 0.32) 56%,
+    transparent 78%
+  );
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .stage:has(.canvas[data-scrim='left'])::after {
+    background: linear-gradient(
+      180deg,
+      rgba(4, 6, 10, 0.9) 0%,
+      rgba(4, 6, 10, 0.5) 42%,
+      rgba(4, 6, 10, 0.88) 100%
+    );
+  }
+}
+
+.stage:has(.canvas[data-scrim='vignette'])::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 90% at 50% 45%, transparent 30%, rgba(4, 6, 10, 0.7) 100%);
+  pointer-events: none;
+}
+
+.stage:has(.canvas[data-scrim='bottom'])::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, var(--ink-1000) 97%);
+  pointer-events: none;
+}

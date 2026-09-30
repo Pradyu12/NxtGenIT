@@ -1,0 +1,345 @@
+/* --------------------------------------------------------------------------
+   Shunya — the atmosphere shift.
+   Everything changes here: the palette cools and darkens, the type scales up,
+   motion slows, and the section is allowed to breathe. The visual language
+   deliberately stops looking like "the rest of the website".
+   -------------------------------------------------------------------------- */
+
+.shunya {
+  position: relative;
+  padding-block: clamp(7rem, 18vh, 14rem);
+  overflow: hidden;
+  isolation: isolate;
+  /* A colder, deeper ground than the rest of the page. */
+  background:
+    radial-gradient(90% 60% at 50% 0%, rgba(6, 16, 24, 0.9), transparent 70%),
+    linear-gradient(180deg, var(--ink-950) 0%, #050a10 45%, var(--ink-1000) 100%);
+}
+
+/* Hairline seam so the transition reads as intentional, not as a seam. */
+.shunya::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(126, 240, 255, 0.24), transparent);
+}
+
+.scene {
+  z-index: -1;
+}
+
+.overture {
+  display: grid;
+  gap: 1.5rem;
+  text-align: center;
+  justify-items: center;
+}
+
+.eyebrowRow {
+  justify-self: center;
+}
+
+.eyebrowRow :global(.eyebrow)::after {
+  display: none;
+}
+
+.title {
+  max-width: 22ch;
+  font-size: clamp(1.5rem, 1rem + 2.6vw, 3.25rem);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+/* --- Wordmark ------------------------------------------------------------ */
+
+.wordmarkWrap {
+  display: grid;
+  gap: 1.25rem;
+  justify-items: center;
+  margin-top: clamp(1.5rem, 5vh, 3rem);
+  width: 100%;
+}
+
+/* Overflow mask so the wordmark can rise into place like a title card. */
+.wordmarkClip {
+  width: 100%;
+  overflow: hidden;
+  padding-block: 0.04em;
+}
+
+.wordmark {
+  display: block;
+  font-size: var(--step-wordmark);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: var(--tracking-wordmark);
+  /* Outline first, fill on the edges: reads as holographic, not as a gradient blob. */
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(126, 240, 255, 0.42);
+  text-shadow:
+    0 0 60px rgba(18, 200, 232, 0.16),
+    0 0 140px rgba(29, 91, 196, 0.14);
+  padding-left: var(--tracking-wordmark);
+  /* Edge-to-edge with the shell padding so it never clips the viewport. */
+  margin-inline: calc(var(--shell-pad) * -1);
+  width: calc(100% + var(--shell-pad) * 2);
+}
+
+@media (min-width: 720px) {
+  .wordmark {
+    -webkit-text-stroke-width: 1.25px;
+  }
+}
+
+.subtitleWrap {
+  max-width: 34ch;
+}
+
+.subtitle {
+  font-size: var(--step-2);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.02em;
+  color: var(--text-base);
+  line-height: 1.25;
+}
+
+.statusWrap {
+  margin-top: 0.25rem;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.5rem 0.9375rem;
+  border: 1px solid var(--line-lime);
+  border-radius: 2px;
+  background: rgba(184, 242, 61, 0.05);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.statusLabel {
+  color: var(--text-faint);
+}
+
+.statusValue {
+  color: var(--lime-300);
+}
+
+/* --- Description --------------------------------------------------------- */
+
+.detail {
+  display: grid;
+  gap: 2.5rem;
+  margin-top: clamp(3.5rem, 10vh, 6.5rem);
+  padding-top: clamp(2.5rem, 6vh, 4rem);
+  border-top: 1px solid var(--line-faint);
+}
+
+@media (min-width: 900px) {
+  .detail {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: clamp(2rem, 6vw, 6rem);
+  }
+}
+
+.description {
+  font-size: var(--step-1);
+  line-height: 1.5;
+  color: var(--text-base);
+  max-width: 40ch;
+}
+
+.telemetry {
+  display: grid;
+  gap: 0.625rem;
+  margin-bottom: 1.5rem;
+}
+
+.telemetryRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 0.625rem;
+  border-bottom: 1px solid var(--line-faint);
+}
+
+.telemetryRow dt {
+  color: var(--text-faint);
+}
+
+.telemetryRow dd {
+  margin: 0;
+  color: var(--text-base);
+}
+
+.horizonNote {
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-faint);
+  max-width: 42ch;
+  font-style: italic;
+}
+
+/* --- Timeline ------------------------------------------------------------ */
+
+.timelineWrap {
+  margin-top: clamp(3rem, 8vh, 5rem);
+}
+
+.timelineHead {
+  margin-bottom: 1.75rem;
+  text-align: center;
+}
+
+.timelineLabel {
+  color: var(--cyan-300);
+}
+
+.timelineNote {
+  color: var(--text-faint);
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  counter-reset: stage;
+}
+
+@media (min-width: 860px) {
+  .timeline {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.stageInner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.25rem 1.25rem 1.5rem 0;
+}
+
+/* Node: a small square that reads as a system marker, not a bullet */
+.node {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 11px;
+  height: 11px;
+  margin-bottom: 0.75rem;
+  border: 1px solid var(--line-soft);
+  background: var(--ink-1000);
+  transition: border-color var(--dur-base) var(--ease-out-expo);
+}
+
+.nodeCore {
+  width: 3px;
+  height: 3px;
+  background: var(--text-faint);
+  transition: background-color var(--dur-base) var(--ease-out-expo);
+}
+
+.stage[data-state='active'] .node {
+  border-color: rgba(184, 242, 61, 0.5);
+}
+
+.stage[data-state='active'] .nodeCore {
+  background: var(--lime-400);
+}
+
+/* `launch` is deliberately unlit — nothing about it is scheduled. */
+.stage[data-state='horizon'] .node {
+  border-style: dashed;
+  border-color: var(--line-soft);
+}
+
+.stage[data-state='horizon'] .nodeCore {
+  background: transparent;
+}
+
+.stageLabel {
+  font-family: var(--font-mono);
+  font-size: clamp(0.6875rem, 0.62rem + 0.3vw, 0.8125rem);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: var(--text-bright);
+}
+
+.stage[data-state='horizon'] .stageLabel {
+  color: var(--text-faint);
+}
+
+.stageCaption {
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-faint);
+  max-width: 24ch;
+}
+
+/* Connector: hairline + arrowhead, vertical on mobile, horizontal on desktop */
+.connector {
+  display: block;
+  color: var(--line-strong);
+  padding-left: 5px;
+  height: 26px;
+}
+
+.connector svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(90deg);
+  transform-origin: center;
+}
+
+@media (min-width: 860px) {
+  .connector {
+    position: absolute;
+    top: 1.25rem;
+    left: 11px;
+    right: 0;
+    height: 12px;
+    padding: 0;
+    /* Sits on the node's own line so the arrowchain reads horizontally. */
+    width: calc(100% - 11px);
+  }
+
+  .connector svg {
+    transform: none;
+  }
+}
+
+.stage:hover .node {
+  border-color: var(--cyan-300);
+}
+
+.stage:hover .nodeCore {
+  background: var(--cyan-300);
+}
+
+/* --- CTA ----------------------------------------------------------------- */
+
+.ctaWrap {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(3rem, 8vh, 5rem);
+}
+

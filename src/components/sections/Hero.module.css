@@ -1,0 +1,167 @@
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 100svh;
+  padding-block: clamp(7rem, 16vh, 11rem) clamp(5rem, 12vh, 8rem);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.scene {
+  z-index: -2;
+}
+
+.inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: grid;
+  gap: clamp(3rem, 8vh, 5rem);
+}
+
+/* Three hairline columns that echo the engineering grid without competing. */
+.frame {
+  position: absolute;
+  inset: 0 var(--shell-pad);
+  z-index: -1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  pointer-events: none;
+}
+
+.frameLine {
+  border-left: 1px solid var(--line-faint);
+}
+
+.frameLine:last-child {
+  border-right: 1px solid var(--line-faint);
+}
+
+/* --- Telemetry placement -------------------------------------------------- */
+/* Two-column split only once the copy column is genuinely wide enough to hold
+   the display headline alongside the readout. Below this the telemetry moves
+   under the copy as a full-width strip. */
+
+@media (min-width: 1200px) {
+  .inner {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+  }
+}
+
+.copy {
+  /* Deliberately no `ch` measure here. The `ch` unit resolves against the
+     element's own font-size, so any body-relative cap (46ch ≈ 390px) would be
+     far narrower than the fluid display type above it and force the headline to
+     wrap inside its clipping mask. The grid column and the `--step-display`
+     clamp are what constrain this instead. */
+  min-width: 0;
+  width: 100%;
+}
+
+.eyebrowRow {
+  margin-bottom: clamp(1.5rem, 3.5vh, 2.5rem);
+}
+
+.title {
+  font-size: var(--step-display);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.titleLine {
+  display: block;
+}
+
+.period {
+  color: var(--lime-400);
+}
+
+.ledeWrap {
+  margin-top: clamp(1.75rem, 4vh, 2.75rem);
+}
+
+.lede {
+  font-size: var(--step-1);
+  line-height: 1.55;
+  color: var(--text-base);
+  max-width: 46ch;
+}
+
+.ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.875rem;
+  margin-top: clamp(2rem, 5vh, 3.25rem);
+}
+
+/* --- Scroll cue --------------------------------------------------------- */
+
+.scrollCue {
+  position: absolute;
+  left: var(--shell-pad);
+  bottom: clamp(1.5rem, 4vh, 3rem);
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--text-faint);
+  transition: color var(--dur-base) var(--ease-out-expo);
+}
+
+.scrollCue:hover {
+  color: var(--text-bright);
+}
+
+.scrollTrack {
+  position: relative;
+  display: block;
+  width: 1px;
+  height: 48px;
+  background: var(--line-soft);
+  overflow: hidden;
+}
+
+.scrollDot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 16px;
+  background: var(--lime-400);
+  animation: scroll-travel 2.6s var(--ease-in-out-quart) infinite;
+}
+
+@keyframes scroll-travel {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(300%);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 899px) {
+  .frame {
+    grid-template-columns: 1fr;
+  }
+
+  .frameLine:not(:first-child) {
+    display: none;
+  }
+
+  .scrollCue {
+    display: none;
+  }
+}

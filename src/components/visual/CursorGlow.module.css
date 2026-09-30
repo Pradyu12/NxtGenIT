@@ -1,0 +1,57 @@
+.layer {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-cursor);
+  pointer-events: none;
+}
+
+.dot,
+.ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  will-change: transform;
+  /* Offset by half so the point sits under the cursor, not at its corner. */
+  margin: -3px 0 0 -3px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  background: var(--lime-300);
+  box-shadow: 0 0 12px rgba(214, 255, 122, 0.55);
+  opacity: 0;
+  transition: opacity var(--dur-base) var(--ease-out-expo);
+}
+
+.dot[data-visible='true'] {
+  opacity: 1;
+}
+
+.ring {
+  width: 34px;
+  height: 34px;
+  margin: -17px 0 0 -17px;
+  border: 1px solid rgba(148, 178, 222, 0.32);
+  transition:
+    width var(--dur-base) var(--ease-out-expo),
+    height var(--dur-base) var(--ease-out-expo),
+    margin var(--dur-base) var(--ease-out-expo),
+    border-color var(--dur-base) var(--ease-out-expo),
+    background-color var(--dur-base) var(--ease-out-expo);
+}
+
+.ring[data-active='true'] {
+  width: 58px;
+  height: 58px;
+  margin: -29px 0 0 -29px;
+  border-color: rgba(184, 242, 61, 0.6);
+  background-color: rgba(184, 242, 61, 0.06);
+}
+
+@media (hover: none), (pointer: coarse) {
+  .layer {
+    display: none;
+  }
+}

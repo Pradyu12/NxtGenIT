@@ -1,0 +1,122 @@
+.shell {
+  display: inline-block;
+  will-change: transform;
+}
+
+.button {
+  --btn-pad-y: 1.0625rem;
+  --btn-pad-x: 1.875rem;
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: var(--btn-pad-y) var(--btn-pad-x);
+  border-radius: 2px;
+  font-size: var(--step-0);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  isolation: isolate;
+  transition:
+    background-color var(--dur-base) var(--ease-out-expo),
+    border-color var(--dur-base) var(--ease-out-expo),
+    color var(--dur-base) var(--ease-out-expo),
+    box-shadow var(--dur-base) var(--ease-out-expo);
+}
+
+.label,
+.trailing {
+  display: inline-flex;
+  align-items: center;
+  will-change: transform;
+}
+
+.trailing {
+  transition: transform var(--dur-base) var(--ease-out-expo);
+}
+
+.button:hover .trailing {
+  transform: translateX(3px);
+}
+
+/* --- Primary: the single lime element on the page ---------------------- */
+
+.primary {
+  background: linear-gradient(180deg, var(--lime-300), var(--lime-400) 55%, var(--lime-500));
+  color: var(--ink-1000);
+  font-weight: 600;
+  box-shadow:
+    0 0 0 1px rgba(214, 255, 122, 0.5),
+    0 18px 40px -22px rgba(184, 242, 61, 0.55);
+}
+
+.primary:hover {
+  box-shadow:
+    0 0 0 1px rgba(214, 255, 122, 0.75),
+    0 24px 56px -22px rgba(184, 242, 61, 0.7);
+}
+
+.primary:active {
+  background: linear-gradient(180deg, var(--lime-400), var(--lime-500));
+}
+
+/* --- Secondary: hairline ghost ---------------------------------------- */
+
+.secondary {
+  background: rgba(148, 178, 222, 0.04);
+  border: 1px solid var(--line-soft);
+  color: var(--text-bright);
+  backdrop-filter: blur(6px);
+}
+
+.secondary:hover {
+  background: rgba(148, 178, 222, 0.09);
+  border-color: var(--line-strong);
+}
+
+.secondary:active {
+  background: rgba(148, 178, 222, 0.13);
+}
+
+/* --- Signal: cinematic, wide-tracked, used once (Shunya) --------------- */
+
+.signal {
+  --btn-pad-y: 1.25rem;
+  --btn-pad-x: 2.5rem;
+
+  background: transparent;
+  border: 1px solid rgba(126, 240, 255, 0.34);
+  color: var(--cyan-300);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  backdrop-filter: blur(6px);
+}
+
+.signal:hover {
+  background: rgba(18, 200, 232, 0.09);
+  border-color: rgba(126, 240, 255, 0.7);
+  color: #dff9ff;
+  box-shadow: 0 0 44px -14px rgba(53, 224, 245, 0.6);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--lime-300);
+  outline-offset: 4px;
+}
+
+@media (max-width: 560px) {
+  .button {
+    --btn-pad-y: 0.9375rem;
+    --btn-pad-x: 1.375rem;
+  }
+
+  .signal {
+    --btn-pad-x: 1.5rem;
+    letter-spacing: 0.22em;
+  }
+}

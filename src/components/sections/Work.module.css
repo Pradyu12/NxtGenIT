@@ -1,0 +1,243 @@
+.head {
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: clamp(2.5rem, 6vh, 4rem);
+}
+
+.eyebrowRow {
+  margin-bottom: 0.5rem;
+}
+
+.title {
+  font-size: var(--step-h2);
+  line-height: 0.94;
+  text-transform: uppercase;
+}
+
+.lede {
+  color: var(--text-dim);
+}
+
+@media (min-width: 900px) {
+  .head {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    column-gap: clamp(2rem, 6vw, 6rem);
+  }
+
+  .eyebrowRow {
+    grid-column: 1 / -1;
+  }
+
+  .ledeWrap {
+    align-self: end;
+    padding-bottom: 0.5rem;
+  }
+}
+
+/* --- Featured project ---------------------------------------------------- */
+
+.featured {
+  border: 1px solid var(--line-faint);
+  background: var(--ink-950);
+}
+
+.featuredInner {
+  display: grid;
+}
+
+@media (min-width: 940px) {
+  .featuredInner {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    align-items: stretch;
+  }
+}
+
+.featuredVisual {
+  position: relative;
+  border-bottom: 1px solid var(--line-faint);
+  overflow: hidden;
+}
+
+@media (min-width: 940px) {
+  .featuredVisual {
+    border-bottom: none;
+    border-right: 1px solid var(--line-faint);
+  }
+}
+
+.visualTag {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4375rem 0.75rem;
+  border: 1px solid var(--line-soft);
+  background: rgba(4, 6, 10, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-base);
+}
+
+.featuredBody {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: clamp(1.5rem, 3vw, 2.75rem);
+}
+
+.featuredMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--line-faint);
+  color: var(--text-faint);
+}
+
+.featuredTitle {
+  font-size: clamp(2rem, 1.4rem + 2.4vw, 3.5rem);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 0.96;
+  color: var(--text-bright);
+  text-transform: uppercase;
+}
+
+.featuredSummary {
+  font-size: var(--step-1);
+  line-height: 1.45;
+  color: var(--text-base);
+  max-width: 42ch;
+}
+
+.featuredText {
+  color: var(--text-dim);
+  line-height: 1.6;
+  max-width: 52ch;
+}
+
+.featuredFoot {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line-faint);
+}
+
+@media (min-width: 520px) {
+  .featuredFoot {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+.metaGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.metaLabel {
+  color: var(--text-faint);
+  font-size: var(--step--1);
+}
+
+.metaList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+/* --- Compact rows --------------------------------------------------------- */
+
+.list {
+  display: grid;
+  gap: 0;
+  margin-top: 1px;
+  border: 1px solid var(--line-faint);
+  border-top: none;
+  background: var(--ink-1000);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: clamp(1.25rem, 2.4vw, 1.875rem) clamp(1.125rem, 2.2vw, 1.75rem);
+  border-top: 1px solid var(--line-faint);
+  transition: background-color var(--dur-base) var(--ease-out-expo);
+}
+
+.list > li:first-child .row {
+  border-top: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .row:hover {
+    background: var(--ink-900);
+  }
+}
+
+.rowMain {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  min-width: 0;
+}
+
+.rowTitle {
+  font-size: var(--step-2);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--text-bright);
+  transition: color var(--dur-fast) var(--ease-out-expo);
+}
+
+.row:hover .rowTitle {
+  color: var(--lime-300);
+}
+
+.rowSummary {
+  color: var(--text-dim);
+  font-size: var(--step-0);
+  line-height: 1.5;
+  max-width: 60ch;
+}
+
+.rowMeta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.375rem;
+  flex: none;
+  color: var(--text-dim);
+  text-align: right;
+}
+
+.rowYear {
+  color: var(--text-faint);
+  font-size: var(--step--1);
+}
+
+@media (max-width: 620px) {
+  .row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.875rem;
+  }
+
+  .rowMeta {
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  }
+}
