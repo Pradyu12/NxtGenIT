@@ -1,13 +1,18 @@
 import { ImageResponse } from 'next/og';
 import { site } from '@/content/site';
 
-export const runtime = 'nodejs';
+// Pre-rendered to a static PNG at build time. `output: 'export'` has no server to
+// render this on demand, and GitHub Pages cannot run a Node or edge runtime, so
+// the image is generated during the build. `scripts/postbuild.mjs` then copies it
+// to `opengraph-image.png` and `layout.tsx` references that stable path, because
+// the auto-generated URL carries a `?hash` query string that a static host ignores.
+export const dynamic = 'force-static';
 export const alt = `${site.name} — ${site.tagline}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
 /**
- * Open Graph card, rendered at request time by Satori.
+ * Open Graph card, pre-rendered by Satori at build time.
  *
  * No custom font is loaded: the built-in fallback keeps the route self-contained
  * and means the OG endpoint never depends on an external CDN being reachable.

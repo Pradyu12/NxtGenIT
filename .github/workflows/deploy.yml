@@ -1,0 +1,70 @@
+name: Deploy to GitHub Pages
+
+# Pages is served from the built static bundle in `out/`, so every push to main
+# rebuilds and redeploys. Pages needs no Node runtime — the entire server side is
+# pre-rendered by `next build`.
+on:
+  push:
+    branches: [main]
+  # Lets a deploy be re-run from the Actions tab without a new commit.
+  workflow_dispatch:
+
+# GitHub Pages serves the `main` branch from `/docs` or a `gh-pages` branch by
+# default. These permissions let the workflow publish the site itself.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never run two deploys at once — they would race and publish a mixed build.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # 20 is the floor for Next.js 15 and keeps the action log readable.
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build static site
+        env:
+          # The origin is baked into canonical URLs, og:url, robots.txt and
+          # sitemap.xml at build time. Overridden here so the deployed metadata
+          # points at the live Pages URL rather than the placeholder domain.
+          NEXT_PUBLIC_SITE_URL: https://pradyu12.github.io/NxtGenIT
+          # Project sites are served from a subpath; every internal URL and asset
+          # request is prefixed with this.
+          NEXT_PUBLIC_BASE_PATH: /NxtGenIT
+        run: npm run build
+
+      - name: Verify export
+        run: |
+          test -f out/index.html   || { echo "missing out/index.html"; exit 1; }
+          test -f out/.nojekyll    || { echo "missing out/.nojekyll — Jekyll would strip _next/"; exit 1; }
+          test -d out/_next        || { echo "missing out/_next"; exit 1; }
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

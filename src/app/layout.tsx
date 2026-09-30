@@ -32,7 +32,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(site.url),
+  // Scheme and host only — see `site.origin`. Next prefixes generated metadata
+  // image routes with `basePath` itself, so including the subpath here would
+  // produce a doubled `/NxtGenIT/NxtGenIT/` path in og:image.
+  metadataBase: new URL(site.origin),
   title: {
     default: `${site.name} — ${site.tagline}`,
     template: `%s — ${site.name}`,
@@ -52,7 +55,9 @@ export const metadata: Metadata = {
     'React',
     'TypeScript',
   ],
-  alternates: { canonical: '/' },
+  // Absolute, including the deploy subpath. A relative `'/'` would be resolved
+  // against `metadataBase` alone and drop the `/NxtGenIT` prefix.
+  alternates: { canonical: `${site.url}/` },
   openGraph: {
     type: 'website',
     siteName: site.name,
@@ -60,11 +65,21 @@ export const metadata: Metadata = {
     description: site.description,
     url: site.url,
     locale: 'en_US',
+    // Referenced explicitly rather than relying on the file convention. The
+    // auto-generated URL would be `/opengraph-image?<hash>`, and GitHub Pages
+    // resolves files by name only — it drops the query string and returns 404,
+    // so every social preview would fall back to a bare link.
+    // `scripts/postbuild.mjs` writes the real file to this path.
+    images: [{ url: '/opengraph-image.png', width: 1200, height: 630, alt: `${site.name} — ${site.tagline}` }],
   },
   twitter: {
     card: 'summary_large_image',
     title: `${site.name} — ${site.tagline}`,
     description: site.description,
+    // Fully qualified and including the subpath. Twitter does not read
+    // `metadataBase`, so a bare `/opengraph-image.png` would point at the domain
+    // root rather than the Pages subpath.
+    images: [`${site.url}/opengraph-image.png`],
   },
   robots: {
     index: true,
