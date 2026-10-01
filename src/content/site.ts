@@ -41,7 +41,7 @@ export const site: SiteConfig = {
     'NxtGenIT is a technology studio building modern web experiences, scalable software and ambitious digital products.',
   url,
   origin,
-  email: 'hello@nxtgenit.dev',
+  email: 'pradyus@zohomail.in',
   location: 'Remote · Worldwide',
   footerServices: ['Web Development', 'Software', 'Products'],
   social: [
